@@ -1,8 +1,7 @@
 # Flit documentation
 
-> **Work in progress:** Flit is currently in private beta. This public
-> documentation repository is being prepared for invited testers. The first
-> downloadable release has not been published yet.
+> **Beta:** Flit is available to invited testers for evaluation. Product
+> behavior and documentation may change as testing progresses.
 
 Flit is an enterprise AI gateway and administration experience built around
 LiteLLM. It gives teams a stable way to configure model deployments, issue
@@ -31,8 +30,9 @@ deployment before inference requests can succeed.
 
 ## Current release
 
-The first planned tester release is `0.1.0-beta.2`. Its application images will
-be published in the public Flit Azure Container Registry:
+The current tester release is [`0.1.0-beta.2`](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.2).
+Its application images are published in the public Flit Azure Container
+Registry:
 
 ```text
 acrflitpublic.azurecr.io/flit/flit-gateway:0.1.0-beta.2
@@ -43,10 +43,8 @@ Installations use immutable digest references from the release manifest rather
 than relying directly on mutable tags. The images can be pulled anonymously;
 testers do not need an Azure account or registry credentials.
 
-The release ZIP will be attached to this repository's
-[GitHub Releases](https://github.com/RytQlk/flit-documentation/releases) page.
-Until that asset appears, the installation instructions are available for
-review but there is no supported public download.
+Download the ZIP, manifest, and checksum file from the
+[`0.1.0-beta.2` GitHub prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.2).
 
 ## Install Flit
 

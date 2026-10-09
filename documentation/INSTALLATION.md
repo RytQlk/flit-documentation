@@ -1,8 +1,8 @@
 # Install Flit `0.1.0-beta.2`
 
-> **Work in progress:** These instructions are ready for review, but the public
-> release asset has not been uploaded yet. Do not substitute files from an old
-> Aquila deployment package.
+> **Beta:** These instructions install the `0.1.0-beta.2` prerelease for
+> evaluation by invited testers. Do not substitute files from an old Aquila
+> deployment package.
 
 This guide installs a published Flit release on macOS, Linux, a Linux virtual
 machine, or Windows. It is written for invited beta testers and does not require
@@ -94,15 +94,13 @@ If `python` is unavailable, use `py -3` in place of `python3` in this guide.
 
 ## 2. Download the release
 
-Download these assets from the
-[Flit documentation releases](https://github.com/RytQlk/flit-documentation/releases)
-page:
+Open the
+[`0.1.0-beta.2` prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.2)
+and download all three assets:
 
-```text
-flit-0.1.0-beta.2.zip
-flit-0.1.0-beta.2-manifest.json
-SHA256SUMS
-```
+- [`flit-0.1.0-beta.2.zip`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.2/flit-0.1.0-beta.2.zip)
+- [`flit-0.1.0-beta.2-manifest.json`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.2/flit-0.1.0-beta.2-manifest.json)
+- [`SHA256SUMS`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.2/SHA256SUMS)
 
 Only use assets attached to the `0.1.0-beta.2` release. Do not download a ZIP
 of this documentation repository as a substitute for the application release.
