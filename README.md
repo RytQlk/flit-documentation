@@ -16,7 +16,7 @@ every application and user.
 
 - A browser-based administration and chat experience.
 - Local administrator accounts and optional Microsoft Entra sign-in.
-- Virtual model tiers such as `flit-fast`, `flit-smart`, and `flit-power`.
+- Virtual model tiers named `low`, `medium`, and `high`.
 - The `flit` automatic selector for policy-aware request classification.
 - Exact model deployment access when deliberate pinning is required.
 - Virtual keys, teams, access controls, and usage analytics.
@@ -30,21 +30,22 @@ deployment before inference requests can succeed.
 
 ## Current release
 
-The current tester release is [`0.1.0-beta.2`](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.2).
+The current tester release is [`0.1.0-beta.3`](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.3).
 Its application images are published in the public Flit Azure Container
 Registry:
 
 ```text
-acrflitpublic.azurecr.io/flit/flit-gateway:0.1.0-beta.2
-acrflitpublic.azurecr.io/flit/flit-web:0.1.0-beta.2
+acrflitpublic.azurecr.io/flit/flit-gateway:0.1.0-beta.3
+acrflitpublic.azurecr.io/flit/flit-web:0.1.0-beta.3
 ```
 
-Installations use immutable digest references from the release manifest rather
-than relying directly on mutable tags. The images can be pulled anonymously;
-testers do not need an Azure account or registry credentials.
+Installations use readable version-tagged, immutable digest references from the
+release manifest rather than relying directly on mutable tags. Gateway and Web
+support both `linux/amd64` and `linux/arm64`. The images can be pulled
+anonymously; testers do not need an Azure account or registry credentials.
 
 Download the ZIP, manifest, and checksum file from the
-[`0.1.0-beta.2` GitHub prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.2).
+[`0.1.0-beta.3` GitHub prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.3).
 
 ## Install Flit
 

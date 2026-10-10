@@ -1,6 +1,6 @@
-# Install Flit `0.1.0-beta.2`
+# Install Flit `0.1.0-beta.3`
 
-> **Beta:** These instructions install the `0.1.0-beta.2` prerelease for
+> **Beta:** These instructions install the `0.1.0-beta.3` prerelease for
 > evaluation by invited testers. Do not substitute files from an old Aquila
 > deployment package.
 
@@ -13,7 +13,8 @@ credentials.
 
 The release ZIP contains Docker Compose definitions, configuration templates,
 the interactive setup script, Nginx configuration, and a manifest with exact
-image digests. Docker pulls the Web and Gateway images anonymously from:
+version-tagged image-index digests. Docker pulls the Web and Gateway images
+anonymously from:
 
 ```text
 acrflitpublic.azurecr.io/flit/flit-web
@@ -24,6 +25,10 @@ PostgreSQL, Redis, Nginx, and optional Presidio images come from their public
 registries. The machine therefore needs outbound HTTPS access to Azure
 Container Registry, Docker Hub, and GitHub Container Registry when Presidio is
 enabled.
+
+The Flit Gateway and Web images support `linux/amd64` and `linux/arm64` Linux
+containers. Docker Desktop selects the correct Linux image on supported macOS
+and Windows hosts automatically.
 
 ## Before you begin
 
@@ -95,14 +100,14 @@ If `python` is unavailable, use `py -3` in place of `python3` in this guide.
 ## 2. Download the release
 
 Open the
-[`0.1.0-beta.2` prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.2)
+[`0.1.0-beta.3` prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.3)
 and download all three assets:
 
-- [`flit-0.1.0-beta.2.zip`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.2/flit-0.1.0-beta.2.zip)
-- [`flit-0.1.0-beta.2-manifest.json`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.2/flit-0.1.0-beta.2-manifest.json)
-- [`SHA256SUMS`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.2/SHA256SUMS)
+- [`flit-0.1.0-beta.3.zip`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.3/flit-0.1.0-beta.3.zip)
+- [`flit-0.1.0-beta.3-manifest.json`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.3/flit-0.1.0-beta.3-manifest.json)
+- [`SHA256SUMS`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.3/SHA256SUMS)
 
-Only use assets attached to the `0.1.0-beta.2` release. Do not download a ZIP
+Only use assets attached to the `0.1.0-beta.3` release. Do not download a ZIP
 of this documentation repository as a substitute for the application release.
 
 Verify the archive checksum before extracting it.
@@ -116,7 +121,7 @@ shasum -a 256 -c SHA256SUMS
 Windows PowerShell:
 
 ```powershell
-Get-FileHash .\flit-0.1.0-beta.2.zip -Algorithm SHA256
+Get-FileHash .\flit-0.1.0-beta.3.zip -Algorithm SHA256
 Get-Content .\SHA256SUMS
 ```
 
@@ -129,16 +134,16 @@ macOS or Linux:
 
 ```bash
 mkdir -p flit-releases
-unzip flit-0.1.0-beta.2.zip -d flit-releases
-cd flit-releases/flit-0.1.0-beta.2
+unzip flit-0.1.0-beta.3.zip -d flit-releases
+cd flit-releases/flit-0.1.0-beta.3
 ```
 
 Windows PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force flit-releases | Out-Null
-Expand-Archive .\flit-0.1.0-beta.2.zip -DestinationPath .\flit-releases
-Set-Location .\flit-releases\flit-0.1.0-beta.2
+Expand-Archive .\flit-0.1.0-beta.3.zip -DestinationPath .\flit-releases
+Set-Location .\flit-releases\flit-0.1.0-beta.3
 ```
 
 Inspect the embedded manifest:
@@ -153,8 +158,9 @@ Windows may use:
 python -m json.tool release-manifest.json
 ```
 
-Confirm that `version` is `0.1.0-beta.2` and the `gateway` and `web` entries use
-`acrflitpublic.azurecr.io/flit/` plus an immutable `@sha256:` digest.
+Confirm that `version` is `0.1.0-beta.3`, `supported_platforms` lists
+`linux/amd64` and `linux/arm64`, and the `gateway` and `web` entries use
+`acrflitpublic.azurecr.io/flit/` plus `<version>@sha256:<index-digest>`.
 
 ## 4. Create local configuration and secrets
 
@@ -395,7 +401,7 @@ rollback notes before downgrading.
 
 Provide:
 
-- Flit version (`0.1.0-beta.2`);
+- Flit version (`0.1.0-beta.3`);
 - operating system and architecture;
 - Docker and Compose versions;
 - the exact failed step;
