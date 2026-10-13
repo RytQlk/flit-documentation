@@ -56,8 +56,8 @@ the relevant values.
 | --- | --- | --- |
 | `POSTGRES_HOST` | `db` | Host used by the bundled deployment. `db` is the private Compose service name. |
 | `POSTGRES_PORT` | `5432` | PostgreSQL TCP port. |
-| `POSTGRES_USER` | `litellm` | Database login and bundled-database initialization user. |
-| `POSTGRES_DB` | `litellm` | Database used by Flit and LiteLLM. |
+| `POSTGRES_USER` | `flit` | Database login and bundled-database initialization user. |
+| `POSTGRES_DB` | `flit` | Database used by Flit. |
 | `POSTGRES_SSLMODE` | empty | PostgreSQL TLS policy. Leave empty for bundled PostgreSQL; use the mode required by an external database. |
 | `POSTGRES_VOLUME_NAME` | `flit_pgdata` | Docker named volume holding bundled PostgreSQL data. |
 | `EXTERNAL_POSTGRES_HOST` | empty | Required external PostgreSQL hostname when that setup option is selected. |
@@ -143,11 +143,17 @@ all be configured. Confirm the required delegated permission in the
 | `WEB_DB_POOL_MIN_SIZE` | `1` | Minimum PostgreSQL connections per Web worker. Must be at least 1. |
 | `WEB_DB_POOL_MAX_SIZE` | `5` | Maximum PostgreSQL connections per Web worker. Must be no smaller than the minimum. |
 | `WEB_FORWARDED_ALLOW_IPS` | `*` | Proxies whose forwarded headers the Web server trusts. Keep Web private behind the supplied Nginx boundary. |
-| `GATEWAY_WORKERS` | `2` | Number of Gateway worker processes. |
+| `GATEWAY_WORKERS` | setup-selected | Number of Gateway worker processes. Setup recommends Docker's available CPU count, bounded to 1–8, and lets the operator override it. |
 
 Increasing worker counts increases memory use and aggregate database/cache
 connections. Maximum Web PostgreSQL allocation is approximately
 `WEB_WORKERS × WEB_DB_POOL_MAX_SIZE`.
+
+`WEB_WORKERS` remains fixed at two unless an operator deliberately edits the
+configuration. On first setup, `GATEWAY_WORKERS` is suggested from
+`docker info`; host CPU detection is used only when Docker cannot report its
+allocation. Rerunning setup preserves the existing positive Gateway value as
+the prompt default rather than silently resizing the installation.
 
 ## Custom model costs
 

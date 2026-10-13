@@ -182,10 +182,11 @@ The interactive setup asks about:
 
 1. bundled or external PostgreSQL;
 2. database name, user, and volume;
-3. generated or supplied secrets;
-4. the Redis volume;
-5. optional Microsoft Entra sign-in; and
-6. optional Presidio services.
+3. a recommended Gateway worker count based on CPUs available to Docker;
+4. generated or supplied secrets;
+5. the Redis volume;
+6. optional Microsoft Entra sign-in; and
+7. optional Presidio services.
 
 For a first local test, choose bundled PostgreSQL, accept `flit_pgdata` and
 `flit_redisdata`, generate new secrets, and leave Microsoft Entra and Presidio
