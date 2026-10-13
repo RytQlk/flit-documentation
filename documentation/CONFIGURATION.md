@@ -19,8 +19,9 @@ Run Docker Compose commands from `src/deployment/docker`. Docker Compose reads
 the `.env` in that directory automatically.
 
 The setup script also writes `COMPOSE_FILE` to `.env`. This records installation
-choices that require additional Compose files, including immutable production
-images, external PostgreSQL, Microsoft Entra sign-in, and Flit-managed Presidio.
+choices that require additional Compose files, such as external PostgreSQL and
+Microsoft Entra sign-in. Published application images and Flit-managed Presidio
+are part of the base release configuration.
 
 You normally do not need to edit `COMPOSE_FILE`. Rerun setup when changing one
 of those choices, then inspect the result:
@@ -37,10 +38,9 @@ These values identify the release and should not be edited.
 
 | Setting | Purpose |
 | --- | --- |
-| `FLIT_RELEASE_DISTRIBUTION` | Marks a published distribution. Setup uses it to select the production-image overlay. It must be `true`. |
 | `WEB_IMAGE` | Exact version-tagged, digest-qualified Web image used by the runtime and Flit migration job. |
 | `GATEWAY_IMAGE` | Exact version-tagged, digest-qualified Gateway image used by the runtime and LiteLLM migration job. |
-| `PRESIDIO_IMAGE_TAG` | Readable version of the optional managed Presidio images. |
+| `PRESIDIO_IMAGE_TAG` | Readable version of the managed Presidio images included by default. |
 | `PRESIDIO_ANALYZER_IMAGE_DIGEST` | Immutable Presidio Analyzer image digest. |
 | `PRESIDIO_ANONYMIZER_IMAGE_DIGEST` | Immutable Presidio Anonymizer image digest. |
 
@@ -200,7 +200,7 @@ To activate it, preserve the setup-generated files in `COMPOSE_FILE`, append
 `docker-compose.tls.yml`, and enable secure cookies. macOS or Linux example:
 
 ```dotenv
-COMPOSE_FILE=docker-compose.yml:overlays/docker-compose.production-images.yml:docker-compose.tls.yml
+COMPOSE_FILE=docker-compose.yml:docker-compose.tls.yml
 NGINX_TLS_DIR=./tls
 SSO_COOKIE_SECURE=true
 ```

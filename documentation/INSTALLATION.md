@@ -21,10 +21,9 @@ acrflitpublic.azurecr.io/flit/flit-web
 acrflitpublic.azurecr.io/flit/flit-gateway
 ```
 
-PostgreSQL, Redis, Nginx, and optional Presidio images come from their public
+PostgreSQL, Redis, Nginx, and Presidio images come from their public
 registries. The machine therefore needs outbound HTTPS access to Azure
-Container Registry, Docker Hub, and GitHub Container Registry when Presidio is
-enabled.
+Container Registry, Docker Hub, and GitHub Container Registry.
 
 The Flit Gateway and Web images support `linux/amd64` and `linux/arm64` Linux
 containers. Docker Desktop selects the correct Linux image on supported macOS
@@ -49,8 +48,8 @@ Choose the database mode before setup:
   database, backup process, network path, and operational owner.
 
 Redis is bundled in this beta and uses `flit_redisdata` by default. Optional
-Microsoft Entra sign-in requires an application registration. Optional
-Presidio adds two more containers and consumes additional memory.
+Microsoft Entra sign-in requires an application registration. Presidio is
+included by default, adds two more containers, and consumes additional memory.
 
 The default installation uses HTTP. Do not expose it directly to the internet.
 Use a trusted TLS ingress or the supplied TLS overlay with properly managed
@@ -185,12 +184,11 @@ The interactive setup asks about:
 3. a recommended Gateway worker count based on CPUs available to Docker;
 4. generated or supplied secrets;
 5. the Redis volume;
-6. optional Microsoft Entra sign-in; and
-7. optional Presidio services.
+6. optional Microsoft Entra sign-in.
 
 For a first local test, choose bundled PostgreSQL, accept `flit_pgdata` and
-`flit_redisdata`, generate new secrets, and leave Microsoft Entra and Presidio
-disabled unless they are part of your test assignment.
+`flit_redisdata`, generate new secrets, and leave Microsoft Entra disabled
+unless it is part of your test assignment. Presidio is not a setup choice.
 
 Generated credentials are stored as individual files under:
 
@@ -264,8 +262,8 @@ docker compose up -d --wait --wait-timeout 300
 docker compose ps
 ```
 
-PostgreSQL, Redis, Gateway, Web, and Nginx should be running and healthy.
-Presidio services appear only when enabled during setup.
+PostgreSQL, Redis, Gateway, Web, Nginx, and both Presidio services should be
+running and healthy.
 
 If startup fails:
 
@@ -274,7 +272,7 @@ docker compose logs --tail=100 \
   db redis gateway web nginx presidio-analyzer presidio-anonymizer
 ```
 
-It is normal for optional services that were not enabled to be absent.
+It is normal for the optional SSO overlay to be absent when it was not enabled.
 
 ## 8. Sign in
 
