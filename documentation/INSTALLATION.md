@@ -206,6 +206,10 @@ Validate the result without changing it:
 python3 scripts/setup_runtime_secrets.py --validate-only
 ```
 
+For every supported non-secret setting, its default, and its operational
+effect, see [Flit configuration](CONFIGURATION.md). The release template is the
+source of truth for which settings are supported by that release.
+
 ## 5. Review and pull the images
 
 Enter the Compose directory:

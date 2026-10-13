@@ -82,7 +82,7 @@ unreviewed internet-facing production deployment.
 | [Installation](documentation/INSTALLATION.md) | Available | Install and validate a published Docker release. |
 | [Microsoft SSO login](documentation/MICROSOFT_SSO_SETUP.md) | Available | Configure Microsoft Entra sign-in for Flit. |
 | [Getting started](documentation/GETTING_STARTED.md) | WIP | First login, model setup, and first request. |
-| [Configuration](documentation/CONFIGURATION.md) | WIP | Runtime options, identity, storage, and integrations. |
+| [Configuration](documentation/CONFIGURATION.md) | Available | Public environment settings, storage, identity, RAG, custom costs, runtime sizing, TLS, and secrets. |
 | [Troubleshooting](documentation/TROUBLESHOOTING.md) | WIP | Symptoms, diagnostics, and recovery procedures. |
 | [Releases](documentation/RELEASES.md) | WIP | Release channels, compatibility, upgrade, and rollback policy. |
 | [Security](SECURITY.md) | WIP | Private vulnerability reporting and safe diagnostics. |
