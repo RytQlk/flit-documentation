@@ -1,1 +1,4 @@
 .env
+
+# Local screenshot originals (may contain credentials or personal information).
+documentation/images/sso/originals/
