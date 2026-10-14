@@ -79,14 +79,24 @@ unreviewed internet-facing production deployment.
 
 | Document | Status | Purpose |
 | --- | --- | --- |
+| [Welcome & architecture](documentation/WELCOME_AND_OVERVIEW.md) | Available | Platform architecture, core pillars, and proxy request flow. |
 | [Installation](documentation/INSTALLATION.md) | Available | Install and validate a published Docker release. |
-| [Microsoft SSO login](documentation/MICROSOFT_SSO_SETUP.md) | Available | Configure Microsoft Entra sign-in for Flit. |
 | [Getting started](documentation/GETTING_STARTED.md) | WIP | First login, model setup, and first request. |
 | [Configuration](documentation/CONFIGURATION.md) | WIP | Runtime options, identity, storage, and integrations. |
 | [Troubleshooting](documentation/TROUBLESHOOTING.md) | WIP | Symptoms, diagnostics, and recovery procedures. |
 | [Releases](documentation/RELEASES.md) | WIP | Release channels, compatibility, upgrade, and rollback policy. |
 | [Security](SECURITY.md) | WIP | Private vulnerability reporting and safe diagnostics. |
 | [Support](SUPPORT.md) | WIP | Beta support scope and bug-report expectations. |
+| [Signing in & authentication](documentation/SIGNING_IN_AND_AUTHENTICATION.md) | Available | Local credentials, session security, and authentication governance. |
+| [Microsoft SSO login](documentation/MICROSOFT_SSO_SETUP.md) | Available | Configure Microsoft Entra sign-in for Flit. |
+| [Chat & document analysis](documentation/CHAT_AND_DOCUMENT_ATTACHMENTS.md) | Available | Web chat UI, model picker, file attachments, and thread management. |
+| [Model administration & tiers](documentation/MODEL_ADMINISTRATION_AND_TIERS.md) | Available | Register upstream deployments, credentials, capability tiers, and failover. |
+| [Automatic request classification](documentation/AUTOMATIC_REQUEST_CLASSIFICATION.md) | Available | Dynamic model tier routing using regex rules, classifier LLMs, or hybrid pipelines. |
+| [Virtual keys, users & teams](documentation/VIRTUAL_KEYS_USERS_AND_TEAMS.md) | Available | Multi-tenant governance, virtual keys, team budgets, and rate limits. |
+| [Guardrails & data protection](documentation/GUARDRAILS_AND_DATA_PROTECTION.md) | Available | Presidio PII detection, DLP redaction rules, and content safety filters. |
+| [Usage analytics & cost observability](documentation/USAGE_ANALYTICS_AND_COST_OBSERVABILITY.md) | Available | Token consumption, latency metrics, spend tracking, and audit exports. |
+| [MCP tools & external agents](documentation/MCP_TOOLS_AND_EXTERNAL_AGENTS.md) | Available | Model Context Protocol (MCP) tool integration and agent-to-agent workflows. |
+| [Gateway API reference](documentation/GATEWAY_API_REFERENCE.md) | Available | OpenAI-compatible endpoints, authentication, model routing, and code examples. |
 
 ## Feedback
 
