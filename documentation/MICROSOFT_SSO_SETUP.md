@@ -103,12 +103,12 @@ Open a terminal in the **extracted release root**, the folder containing
 `scripts` and `src`. Run:
 
 ```powershell
-python scripts/setup_runtime_secrets.py
+python scripts/setup_runtime_secrets.py --reconfigure
 ```
 
-On macOS or Linux, use `python3` if needed. Keep the existing database settings,
-volume names, and other deployment choices. Answer **Yes** to **Configure
-Microsoft Entra SSO**, then enter:
+On macOS or Linux, use `python3` if needed. Answer **Yes** to **Enable Microsoft
+Entra SSO** (or **Update Microsoft Entra SSO settings** when it is already
+enabled), then enter:
 
 | Setup prompt | Value |
 | --- | --- |
@@ -121,7 +121,9 @@ Microsoft Entra SSO**, then enter:
 Setup writes the IDs and URLs to `src/deployment/docker/.env` and stores the
 secret in `src/deployment/docker/secrets/microsoft_client_secret` by default.
 It enables `overlays/docker-compose.sso.yml` to mount that secret into Flit.
-Existing secret files are preserved; setup does not replace an old client secret.
+Existing secret files are preserved; reconfiguration does not rotate an old
+client secret. Coordinate an unsupported manual secret rotation with the Flit
+team when the existing secret must be replaced.
 
 **Do not put the client secret or employee passwords in `.env`.** You do not need
 to obtain or save ID tokens, access tokens, or refresh tokens yourself.
@@ -151,13 +153,17 @@ overlays; the setup tool does not configure certificates.
 
 ## 5. Apply the settings and sign in
 
-From the extracted release root:
+The reconfiguration script validates a complete candidate and asks whether it
+may stop and restart Flit. Approve that prompt to apply the settings now. If you
+decline, the running installation stays unchanged and the script prints the
+exact `--apply-reconfigure` command to run later.
+
+After the restart, verify the deployment from the Compose directory:
 
 ```powershell
-python scripts/setup_runtime_secrets.py --validate-only
 cd src/deployment/docker
 docker compose config --quiet
-docker compose up -d --no-deps --force-recreate --wait web
+docker compose ps
 ```
 
 If the installation uses a custom Compose project name, use the same

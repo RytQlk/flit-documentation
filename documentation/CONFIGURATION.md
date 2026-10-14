@@ -1,11 +1,10 @@
 # Configure a Flit Docker release
 
 This guide describes the supported, non-secret settings in
-`src/deployment/docker/.env` in a standard Flit release. Start with the file
-included in the same release ZIP:
+`src/deployment/docker/.env` in a standard Flit release. From the extracted
+release root, let the setup script create it from the packaged template:
 
 ```bash
-cp src/deployment/docker/.env.example src/deployment/docker/.env
 python3 scripts/setup_runtime_secrets.py
 ```
 
@@ -20,11 +19,13 @@ the `.env` in that directory automatically.
 
 The setup script also writes `COMPOSE_FILE` to `.env`. This records installation
 choices that require additional Compose files, such as external PostgreSQL and
-Microsoft Entra sign-in. Published application images and Flit-managed Presidio
-are part of the base release configuration.
+Microsoft Entra sign-in. It also records the optional Flit-managed Presidio
+overlay when selected.
 
-You normally do not need to edit `COMPOSE_FILE`. Rerun setup when changing one
-of those choices, then inspect the result:
+You normally do not need to edit `COMPOSE_FILE`. Initial setup refuses to
+overwrite an existing `.env`; use the bounded reconfiguration workflow below
+for supported post-installation changes. Inspect the effective configuration
+with:
 
 ```bash
 cd src/deployment/docker
@@ -40,7 +41,7 @@ These values identify the release and should not be edited.
 | --- | --- |
 | `WEB_IMAGE` | Exact version-tagged, digest-qualified Web image used by the runtime and Flit migration job. |
 | `GATEWAY_IMAGE` | Exact version-tagged, digest-qualified Gateway image used by the runtime and LiteLLM migration job. |
-| `PRESIDIO_IMAGE_TAG` | Readable version of the managed Presidio images included by default. |
+| `PRESIDIO_IMAGE_TAG` | Readable version of the optional managed Presidio images. |
 | `PRESIDIO_ANALYZER_IMAGE_DIGEST` | Immutable Presidio Analyzer image digest. |
 | `PRESIDIO_ANONYMIZER_IMAGE_DIGEST` | Immutable Presidio Anonymizer image digest. |
 
@@ -152,8 +153,39 @@ connections. Maximum Web PostgreSQL allocation is approximately
 `WEB_WORKERS` remains fixed at two unless an operator deliberately edits the
 configuration. On first setup, `GATEWAY_WORKERS` is suggested from
 `docker info`; host CPU detection is used only when Docker cannot report its
-allocation. Rerunning setup preserves the existing positive Gateway value as
+allocation. Reconfiguration preserves the existing positive Gateway value as
 the prompt default rather than silently resizing the installation.
+
+## Safe reconfiguration
+
+Do not rerun initial setup or directly replace `.env` for routine supported
+changes. From the extracted release root, run:
+
+```bash
+python3 scripts/setup_runtime_secrets.py --reconfigure
+```
+
+The reconfiguration workflow can change Gateway workers, enable managed
+Presidio, enable or update Microsoft Entra sign-in, and update Azure AI Search
+retrieval. It cannot change database mode or identity, volume names, release
+images, or runtime secrets. It also cannot disable Presidio; remove active
+Presidio guardrails through the Admin UI before planning any unsupported
+manual topology change.
+
+The script writes and validates a complete candidate below
+`.flit/reconfigure/` while leaving the active `.env` untouched. If you approve
+immediate application, it stops the current topology, backs up `.env`, swaps in
+the candidate atomically, and restarts Flit. If startup fails, it restores the
+previous configuration and restarts the previous topology.
+
+If you decline the restart, the script prints an `--apply-reconfigure` command
+for applying that candidate later. Candidates are bound to the active
+configuration at creation time, so stale or modified candidates are rejected.
+
+Every configuration and reconfiguration event is appended to the
+owner-readable `.flit/configuration-history.jsonl` file. Secret values and
+Microsoft tenant/client identifiers are not recorded. This file is useful for
+troubleshooting but is not a tamper-proof security audit.
 
 ## Custom model costs
 
@@ -227,7 +259,7 @@ microsoft_client_secret
 
 The Microsoft file is present only when Entra sign-in is configured. Keep this
 directory owner-readable, exclude it from source control, and back it up only
-through an approved secret-management process. Rerunning setup preserves
+through an approved secret-management process. Reconfiguration preserves
 existing secret files and does not silently rotate credentials.
 
 ## Validate a change
