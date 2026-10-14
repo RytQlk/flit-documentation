@@ -82,7 +82,7 @@ unreviewed internet-facing production deployment.
 | [Welcome & architecture](documentation/WELCOME_AND_OVERVIEW.md) | Available | Platform architecture, core pillars, and proxy request flow. |
 | [Installation](documentation/INSTALLATION.md) | Available | Install and validate a published Docker release. |
 | [Getting started](documentation/GETTING_STARTED.md) | WIP | First login, model setup, and first request. |
-| [Configuration](documentation/CONFIGURATION.md) | WIP | Runtime options, identity, storage, and integrations. |
+| [Configuration](documentation/CONFIGURATION.md) | Available | Public environment settings, safe reconfiguration, storage, identity, RAG, custom costs, runtime sizing, TLS, and secrets. |
 | [Troubleshooting](documentation/TROUBLESHOOTING.md) | WIP | Symptoms, diagnostics, and recovery procedures. |
 | [Releases](documentation/RELEASES.md) | WIP | Release channels, compatibility, upgrade, and rollback policy. |
 | [Security](SECURITY.md) | WIP | Private vulnerability reporting and safe diagnostics. |

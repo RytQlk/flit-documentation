@@ -21,10 +21,10 @@ acrflitpublic.azurecr.io/flit/flit-web
 acrflitpublic.azurecr.io/flit/flit-gateway
 ```
 
-PostgreSQL, Redis, Nginx, and optional Presidio images come from their public
-registries. The machine therefore needs outbound HTTPS access to Azure
-Container Registry, Docker Hub, and GitHub Container Registry when Presidio is
-enabled.
+PostgreSQL, Redis, and Nginx images come from their public registries. Optional
+managed Presidio images are also pulled from public registries when selected.
+The machine therefore needs outbound HTTPS access to Azure Container Registry,
+Docker Hub, and GitHub Container Registry.
 
 The Flit Gateway and Web images support `linux/amd64` and `linux/arm64` Linux
 containers. Docker Desktop selects the correct Linux image on supported macOS
@@ -49,8 +49,8 @@ Choose the database mode before setup:
   database, backup process, network path, and operational owner.
 
 Redis is bundled in this beta and uses `flit_redisdata` by default. Optional
-Microsoft Entra sign-in requires an application registration. Optional
-Presidio adds two more containers and consumes additional memory.
+Microsoft Entra sign-in requires an application registration. Optional managed
+Presidio adds two containers and consumes additional memory when selected.
 
 The default installation uses HTTP. Do not expose it directly to the internet.
 Use a trusted TLS ingress or the supplied TLS overlay with properly managed
@@ -167,14 +167,12 @@ Confirm that `version` is `0.1.0-beta.3`, `supported_platforms` lists
 From the extracted release root:
 
 ```bash
-cp src/deployment/docker/.env.example src/deployment/docker/.env
 python3 scripts/setup_runtime_secrets.py
 ```
 
 Windows PowerShell:
 
 ```powershell
-Copy-Item src/deployment/docker/.env.example src/deployment/docker/.env
 python scripts/setup_runtime_secrets.py
 ```
 
@@ -182,14 +180,19 @@ The interactive setup asks about:
 
 1. bundled or external PostgreSQL;
 2. database name, user, and volume;
-3. generated or supplied secrets;
-4. the Redis volume;
-5. optional Microsoft Entra sign-in; and
-6. optional Presidio services.
+3. a recommended Gateway worker count based on CPUs available to Docker;
+4. generated or supplied secrets;
+5. the Redis volume;
+6. optional Microsoft Entra sign-in; and
+7. optional Flit-managed Presidio services.
 
 For a first local test, choose bundled PostgreSQL, accept `flit_pgdata` and
-`flit_redisdata`, generate new secrets, and leave Microsoft Entra and Presidio
-disabled unless they are part of your test assignment.
+`flit_redisdata`, generate new secrets, and leave Microsoft Entra disabled
+unless it is part of your test assignment. Enable Presidio only when you plan
+to use its guardrails and have allocated resources for its two containers.
+
+Initial setup refuses to modify an existing `.env`. Use the reconfiguration
+workflow below for supported changes to an installed system.
 
 Generated credentials are stored as individual files under:
 
@@ -205,6 +208,10 @@ Validate the result without changing it:
 ```bash
 python3 scripts/setup_runtime_secrets.py --validate-only
 ```
+
+For every supported non-secret setting, its default, and its operational
+effect, see [Flit configuration](CONFIGURATION.md). The release template is the
+source of truth for which settings are supported by that release.
 
 ## 5. Review and pull the images
 
@@ -223,7 +230,8 @@ docker compose config --images
 
 The Web and Gateway entries must be digest-qualified references under
 `acrflitpublic.azurecr.io/flit/`. They must not use `:latest`, `:dev`, or an
-`aquila` repository.
+`aquila` repository. If Presidio was selected, its two digest-pinned images
+also appear.
 
 Pull all selected images without signing into Azure:
 
@@ -259,19 +267,58 @@ docker compose up -d --wait --wait-timeout 300
 docker compose ps
 ```
 
-PostgreSQL, Redis, Gateway, Web, and Nginx should be running and healthy.
-Presidio services appear only when enabled during setup.
+PostgreSQL, Redis, Gateway, Web, and Nginx should be running and healthy. The
+Presidio analyzer and anonymizer should also be healthy when Presidio was
+selected during setup or enabled later through reconfiguration.
 
 If startup fails:
 
 ```bash
-docker compose logs --tail=100 \
-  db redis gateway web nginx presidio-analyzer presidio-anonymizer
+docker compose logs --tail=100 db redis gateway web nginx
 ```
 
-It is normal for optional services that were not enabled to be absent.
+When Presidio is enabled, inspect its services separately:
 
-## 8. Sign in
+```bash
+docker compose logs --tail=100 presidio-analyzer presidio-anonymizer
+```
+
+It is normal for optional Presidio and SSO services to be absent when they were
+not enabled.
+
+## 8. Reconfigure an existing installation
+
+Use the bounded reconfiguration workflow instead of rerunning initial setup:
+
+```bash
+python3 scripts/setup_runtime_secrets.py --reconfigure
+```
+
+Windows PowerShell:
+
+```powershell
+python scripts/setup_runtime_secrets.py --reconfigure
+```
+
+It can change Gateway workers, enable Presidio, enable or update Microsoft
+Entra sign-in, and update Azure AI Search retrieval. It cannot change database
+mode or identity, volumes, release images, or runtime secrets. Presidio cannot
+be disabled by this tool; remove its active guardrails through the Admin UI
+before considering an unsupported manual topology change.
+
+The script first writes and validates a complete candidate below
+`.flit/reconfigure/` without changing the active `.env`. If you approve the
+restart, it stops the current topology, backs up and replaces `.env`, then
+restarts Flit. A failed startup automatically restores and restarts the
+previous configuration.
+
+If you decline, the active installation remains unchanged and the script
+prints the exact `--apply-reconfigure` command to run later. Stale or modified
+candidates are rejected. Configuration events are appended to the
+owner-readable `.flit/configuration-history.jsonl`; sensitive values are not
+recorded, and the file is diagnostic history rather than a tamper-proof audit.
+
+## 9. Sign in
 
 Open <http://localhost:4000>.
 
@@ -304,7 +351,7 @@ reload, and sign in again. Avoid alternating between `localhost` and
 Changing the bootstrap password file after migrations does not reset an
 existing administrator account.
 
-## 9. Perform a smoke test
+## 10. Perform a smoke test
 
 In the administration UI:
 
@@ -328,7 +375,7 @@ curl http://localhost:4000/v1/chat/completions \
 Replace both placeholders. A healthy installation without a configured model
 cannot complete inference requests.
 
-## 10. Test persistence
+## 11. Test persistence
 
 Stop and restart the stack without deleting volumes:
 
