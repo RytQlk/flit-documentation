@@ -65,4 +65,4 @@ The **Agents** workspace allows administrators to register and govern external a
 ## Next Steps
 
 - Consult the complete API specification and cURL examples in [GATEWAY_API_REFERENCE.md](GATEWAY_API_REFERENCE.md).
-- Return to the table of contents in [README.md](README.md).
+- Return to the table of contents in [README.md](../README.md).

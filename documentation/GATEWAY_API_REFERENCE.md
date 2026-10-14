@@ -180,4 +180,4 @@ Flit emits RFC 7807 compliant error payloads:
 
 ## Next Steps
 
-- Return to the [Table of Contents](README.md) for navigation across all sections.
+- Return to the [Table of Contents](../README.md) for navigation across all sections.
