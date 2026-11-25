@@ -1,6 +1,6 @@
-# Install Flit `0.1.0-beta.4`
+# Install Flit `0.1.0-beta.5`
 
-> **Beta:** These instructions install the `0.1.0-beta.4` prerelease for
+> **Beta:** These instructions install the `0.1.0-beta.5` prerelease for
 > evaluation by invited testers. Do not substitute files from an old Aquila
 > deployment package.
 
@@ -100,14 +100,14 @@ If `python` is unavailable, use `py -3` in place of `python3` in this guide.
 ## 2. Download the release
 
 Open the
-[`0.1.0-beta.4` prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.4)
+[`0.1.0-beta.5` prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.5)
 and download all three assets:
 
-- [`flit-0.1.0-beta.4.zip`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.4/flit-0.1.0-beta.4.zip)
-- [`flit-0.1.0-beta.4-manifest.json`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.4/flit-0.1.0-beta.4-manifest.json)
-- [`SHA256SUMS`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.4/SHA256SUMS)
+- [`flit-0.1.0-beta.5.zip`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.5/flit-0.1.0-beta.5.zip)
+- [`flit-0.1.0-beta.5-manifest.json`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.5/flit-0.1.0-beta.5-manifest.json)
+- [`SHA256SUMS`](https://github.com/RytQlk/flit-documentation/releases/download/0.1.0-beta.5/SHA256SUMS)
 
-Only use assets attached to the `0.1.0-beta.4` release. Do not download a ZIP
+Only use assets attached to the `0.1.0-beta.5` release. Do not download a ZIP
 of this documentation repository as a substitute for the application release.
 
 Verify the archive checksum before extracting it.
@@ -121,7 +121,7 @@ shasum -a 256 -c SHA256SUMS
 Windows PowerShell:
 
 ```powershell
-Get-FileHash .\flit-0.1.0-beta.4.zip -Algorithm SHA256
+Get-FileHash .\flit-0.1.0-beta.5.zip -Algorithm SHA256
 Get-Content .\SHA256SUMS
 ```
 
@@ -134,16 +134,16 @@ macOS or Linux:
 
 ```bash
 mkdir -p flit-releases
-unzip flit-0.1.0-beta.4.zip -d flit-releases
-cd flit-releases/flit-0.1.0-beta.4
+unzip flit-0.1.0-beta.5.zip -d flit-releases
+cd flit-releases/flit-0.1.0-beta.5
 ```
 
 Windows PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force flit-releases | Out-Null
-Expand-Archive .\flit-0.1.0-beta.4.zip -DestinationPath .\flit-releases
-Set-Location .\flit-releases\flit-0.1.0-beta.4
+Expand-Archive .\flit-0.1.0-beta.5.zip -DestinationPath .\flit-releases
+Set-Location .\flit-releases\flit-0.1.0-beta.5
 ```
 
 Inspect the embedded manifest:
@@ -158,7 +158,7 @@ Windows may use:
 python -m json.tool release-manifest.json
 ```
 
-Confirm that `version` is `0.1.0-beta.4`, `supported_platforms` lists
+Confirm that `version` is `0.1.0-beta.5`, `supported_platforms` lists
 `linux/amd64` and `linux/arm64`, and the `gateway` and `web` entries use
 `acrflitpublic.azurecr.io/flit/` plus `<version>@sha256:<index-digest>`.
 
@@ -448,7 +448,7 @@ rollback notes before downgrading.
 
 Provide:
 
-- Flit version (`0.1.0-beta.4`);
+- Flit version (`0.1.0-beta.5`);
 - operating system and architecture;
 - Docker and Compose versions;
 - the exact failed step;

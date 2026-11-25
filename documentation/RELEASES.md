@@ -18,6 +18,24 @@ The embedded manifest is sufficient for installation. The external copy is a
 metadata convenience, not by itself proof of ZIP integrity. Verify the ZIP
 against the release's `SHA256SUMS` before extraction.
 
+## 0.1.0-beta.5
+
+- Adds administrator-controlled Knowledge + LLM classification, including corpus
+  management, shadow evaluation, and activation review.
+- Adds managed vector stores with request-level selection and access controls.
+  Configure Azure AI Search in **Admin → Vector Stores**. Milvus document ACLs
+  require a signed-in Entra user and permission metadata on indexed chunks.
+- Adds persistent chat history, conversation rename and deletion, and image
+  inputs for models that support vision.
+- Expands guardrail execution and user activity analytics, adds custom model
+  pricing, and improves A2A Agent Card discovery.
+- Updates the pinned LiteLLM baseline to v1.106.4.
+
+The release bundles Linux images for amd64 and arm64. See the
+[installation guide](INSTALLATION.md) for checksums, setup, and upgrade steps.
+Back up PostgreSQL before upgrading and review database migration compatibility
+before attempting a rollback.
+
 ## 0.1.0-beta.4
 
 This release simplifies the public Docker configuration contract and adds a

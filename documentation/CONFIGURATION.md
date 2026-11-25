@@ -116,25 +116,11 @@ The Microsoft client secret is stored in
 
 ## Azure AI Search retrieval
 
-Flit can enrich an authenticated chat request with results from an Azure AI
-Search index. It uses the signed-in user's delegated Microsoft identity rather
-than an Azure Search API key.
-
-| Setting | Default | Purpose |
-| --- | --- | --- |
-| `RAG_ENABLED` | `false` | Enables Azure AI Search retrieval. Leave disabled until Entra and the search index are ready. |
-| `AZURE_SEARCH_ENDPOINT` | empty | Search service endpoint, such as `https://example.search.windows.net`. Required when enabled. |
-| `AZURE_SEARCH_INDEX_NAME` | empty | Index containing searchable document chunks. Required when enabled. |
-| `AZURE_SEARCH_API_VERSION` | `2026-05-01-preview` | Azure AI Search API version used by this release. |
-| `RAG_MIN_SCORE` | `0.5` | Minimum non-negative relevance score accepted from retrieval. |
-| `RAG_TOP_K` | `5` | Maximum number of search matches considered for context. Must be positive. |
-| `RAG_TIMEOUT_SECONDS` | `15` | Timeout for a retrieval attempt. Must be positive. |
-| `RAG_RETRY_ATTEMPTS` | `4` | Number of attempts allowed for retryable retrieval failures. Must be positive. |
-| `RAG_FAILURE_MODE` | `bypass` | `bypass` continues without context after failure; `fail` rejects the request. |
-
-When `RAG_ENABLED=true`, the tenant ID, client ID, endpoint, and index name must
-all be configured. Confirm the required delegated permission in the
-[Microsoft SSO guide](MICROSOFT_SSO_SETUP.md) before enabling retrieval.
+Register existing indexes under **Admin → Vector Stores** and choose ACL or
+Non-ACL mode. ACL mode uses the signed-in user's delegated Microsoft Search
+token. Non-ACL mode uses the configured service API key and query embedding
+configuration. Use **Test Vector Store** after saving and grant access to the
+intended users, teams, or virtual keys.
 
 ## Web and Gateway runtime sizing
 
@@ -166,8 +152,8 @@ python3 scripts/setup_runtime_secrets.py --reconfigure
 ```
 
 The reconfiguration workflow can change Gateway workers, enable managed
-Presidio, enable or update Microsoft Entra sign-in, and update Azure AI Search
-retrieval. It cannot change database mode or identity, volume names, release
+Presidio, and enable or update Microsoft Entra sign-in. It cannot change
+database mode or identity, volume names, release
 images, or runtime secrets. It also cannot disable Presidio; remove active
 Presidio guardrails through the Admin UI before planning any unsupported
 manual topology change.
