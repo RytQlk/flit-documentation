@@ -30,13 +30,13 @@ deployment before inference requests can succeed.
 
 ## Current release
 
-The current tester release is [`0.1.0-beta.4`](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.4).
+The current tester release is [`0.1.0-beta.5`](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.5).
 Its application images are published in the public Flit Azure Container
 Registry:
 
 ```text
-acrflitpublic.azurecr.io/flit/flit-gateway:0.1.0-beta.4
-acrflitpublic.azurecr.io/flit/flit-web:0.1.0-beta.4
+acrflitpublic.azurecr.io/flit/flit-gateway:0.1.0-beta.5
+acrflitpublic.azurecr.io/flit/flit-web:0.1.0-beta.5
 ```
 
 Installations use readable version-tagged, immutable digest references from the
@@ -45,7 +45,7 @@ support both `linux/amd64` and `linux/arm64`. The images can be pulled
 anonymously; testers do not need an Azure account or registry credentials.
 
 Download the ZIP, manifest, and checksum file from the
-[`0.1.0-beta.4` GitHub prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.4).
+[`0.1.0-beta.5` GitHub prerelease](https://github.com/RytQlk/flit-documentation/releases/tag/0.1.0-beta.5).
 
 ## Install Flit
 
